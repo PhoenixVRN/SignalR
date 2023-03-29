@@ -13,7 +13,7 @@ public class ConnectToHub : MonoBehaviour
     void Start()
     {
        var con = ConnectToHubAsync();
-       // con.Invoke("SendMessage", "JsonUtility.ToJson(json1)", "hffjjf");
+       
     }
     void DisplayMessage(string message)
     {
