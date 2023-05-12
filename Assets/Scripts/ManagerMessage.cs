@@ -86,7 +86,7 @@ public class ManagerMessage : MonoBehaviour
         var arg2 = _movePlayer.gameObject.transform.position.x;
         var arg3 = _movePlayer.gameObject.transform.position.y;
         signalR.Invoke("SendMessage", arg1, arg2, arg3);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.02f);
         IsSend = true;
     }
     
