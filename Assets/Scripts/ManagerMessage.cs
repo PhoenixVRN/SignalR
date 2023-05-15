@@ -73,6 +73,7 @@ public class ManagerMessage : MonoBehaviour
         signalR.ConnectionStarted += (object sender, ConnectionEventArgs e) =>
         {
             DisplayMessage("Connection successful");
+            SatrtSyncNPS();
             send.interactable = true;
         };
         signalR.ConnectionClosed += (object sender, ConnectionEventArgs e) =>
@@ -122,7 +123,15 @@ public class ManagerMessage : MonoBehaviour
                 oNpc.gameObject.transform.position = new Vector3(args1, args2, 0f);
             } 
         }
-        if (ID == this.ID) return;
+        // if (ID == this.ID) return;
         // _enamy.transform.position = new Vector3(args1, args2, 0f);
+    }
+
+    public void SatrtSyncNPS()
+    {
+        foreach (var n in _npcs)
+        {
+          n.StartMoveCync();  
+        }
     }
 }

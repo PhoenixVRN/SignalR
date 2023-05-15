@@ -15,12 +15,7 @@ public class MoveNPC : MonoBehaviour
 
     void Start()
     {
-        _managerMessage = ManagerMessage.Instance;
-        if (IsServer)
-        {
-            MovementNPC();
-            Invoke("SendCoordinates", 1f);
-        }
+        // _managerMessage = ManagerMessage.Instance;
     }
 
     private void MovementNPC()
@@ -34,7 +29,16 @@ public class MoveNPC : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(_speedSend);
-            _managerMessage.SendNPC(ID, transform.position.x, transform.position.y);
+            ManagerMessage.Instance.SendNPC(ID, transform.position.x, transform.position.y);
+        }
+    }
+
+    public void StartMoveCync()
+    {
+        if (IsServer)
+        {
+            MovementNPC();
+            StartCoroutine(SendCoordinates());
         }
     }
 }
