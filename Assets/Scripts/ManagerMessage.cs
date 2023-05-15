@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class ManagerMessage : MonoBehaviour
 {
+    public static ManagerMessage Instance;
     public int ID;
     public Button send;
     [SerializeField] private TextMeshProUGUI _textStatus;
@@ -16,6 +17,8 @@ public class ManagerMessage : MonoBehaviour
 
     [SerializeField] private MovePlayer _movePlayer;
     [SerializeField] private GameObject _enamy;
+
+    [SerializeField] private List<MoveNPC> _npcs;
     // [SerializeField] private GameObject _blue;
     
     private SignalR signalR;
@@ -24,6 +27,16 @@ public class ManagerMessage : MonoBehaviour
     private string signalRHubURL = "http://109.195.51.60:5555/chatHub";
     void Start()
     {
+        if (Instance == null)
+        { 
+            Instance = this; 
+        } else if(Instance == this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
+        
+        // InitializeManager();
         send.interactable = false;
         Signal();
     }
@@ -89,6 +102,11 @@ public class ManagerMessage : MonoBehaviour
         yield return new WaitForSeconds(0.02f);
         IsSend = true;
     }
+
+    public void SendNPC(int ID, float X, float Y)
+    {
+        signalR.Invoke("SendMessage", ID, X, Y);
+    }
     
     void DisplayMessage(string message)
     {
@@ -97,7 +115,14 @@ public class ManagerMessage : MonoBehaviour
 
     private void ResponseDTO(int ID, float args1, float args2)
     {
+        foreach (var oNpc in _npcs)
+        {
+            if (oNpc.ID == ID && !oNpc.IsServer)
+            {
+                oNpc.gameObject.transform.position = new Vector3(args1, args2, 0f);
+            } 
+        }
         if (ID == this.ID) return;
-        _enamy.transform.position = new Vector3(args1, args2, 0f);
+        // _enamy.transform.position = new Vector3(args1, args2, 0f);
     }
 }
