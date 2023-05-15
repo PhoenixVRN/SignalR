@@ -1006,6 +1006,11 @@ MonoBehaviour:
   - {fileID: 1644370587}
   - {fileID: 1084478219}
   - {fileID: 1956517657}
+  - {fileID: 1176390815}
+  - {fileID: 1115415318}
+  - {fileID: 1430373061}
+  - {fileID: 1640336579}
+  - {fileID: 248600082}
 --- !u!4 &871161822
 Transform:
   m_ObjectHideFlags: 0
